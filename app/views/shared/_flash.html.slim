@@ -1,0 +1,8 @@
+- if flash.now[:notice]
+  .alert.alert-success#alert-success
+    = flash.now[:notice]
+
+- if flash.now[:alert]
+  - message = flash.now[:alert].is_a?(Array) ? flash.now[:alert].join('<br />').html_safe : flash.now[:alert]
+  .alert.alert-danger#alert-danger
+    = message
