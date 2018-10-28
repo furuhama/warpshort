@@ -1,3 +1,7 @@
-h2 test
+h2 Warpshort
 
-p hi, there
+p Enter your direction
+
+= form_with model: @url || Url.new, remote: false do |f|
+  = f.text_area :direction
+  = f.submit 'Generate shorten url', data: { disable_with: 'Generating ...' }
