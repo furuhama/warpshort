@@ -17,7 +17,7 @@ class UrlsController < ApplicationController
     if url_generator.generate
       redirect_to root_path, notice: "Here's Warp gate for your direction: #{url_generator.hashed_value}"
     else
-      redirect_to root_path, alert: url_generator.errors
+      redirect_to root_path, alert: url_generator.errors.full_messages
     end
   end
 
@@ -28,6 +28,6 @@ class UrlsController < ApplicationController
   end
 
   def url_param
-    params.permit(:direction)
+    params.require(:url).permit(:direction)
   end
 end

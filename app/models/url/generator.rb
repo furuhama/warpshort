@@ -3,22 +3,22 @@
 class Url
   class Generator
     include ActiveModel::Model
-    include ActiveModel::Attributes
 
-    attribute :direction, :string
-    attribute :hashed_value, :string
+    attr_reader :direction, :hashed_value
 
     def initialize(url)
-      direction = url
+      @direction = url
       # TODO: hash 化のロジック実装する
-      hashed_value = url
+      @hashed_value = url
     end
 
     def generate
-      if valid?
+      url = Url.new(to_hash)
+
+      if url.valid?
         # NOTE: valid でかつ永続化に失敗する場合
         # 予期せぬ状態になることが考えられるので例外を投げる
-        Url.create!(to_hash)
+        url.save!
       else
         errors.add(:base, 'Failed to generate shorten url')
 
