@@ -12,10 +12,12 @@ class UrlsController < ApplicationController
   end
 
   def create
-    if url = Url.create(direction: url_param[:direction])
-      redirect_to root_path, notice: "Here's Warp gate for your direction: #{url.hashed_value}"
+    url_generator = Url::Generator.new(url_param[:direction])
+
+    if url_generator.generate
+      redirect_to root_path, notice: "Here's Warp gate for your direction: #{url_generator.hashed_value}"
     else
-      redirect_to root_path, alert: 'Failed to generate shorten url'
+      redirect_to root_path, alert: url_generator.errors
     end
   end
 
