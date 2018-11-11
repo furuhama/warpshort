@@ -13,8 +13,10 @@
 ActiveRecord::Schema.define(version: 2018_10_27_112913) do
 
   create_table "urls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "direction"
-    t.string "hashed_value"
+    t.string "direction", null: false
+    t.string "hashed_value", null: false
+    t.index ["direction"], name: "index_urls_on_direction", unique: true
+    t.index ["hashed_value"], name: "index_urls_on_hashed_value", unique: true
   end
 
 end
