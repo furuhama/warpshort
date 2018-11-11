@@ -2,7 +2,7 @@
 
 module WarpShort
   HOSTNAME = if Rails.env.development?
-               'http://localhost:3000'.freeze
+               'http://localhost:3000/'.freeze
              else
                '' # TODO: Fill this string with production server hostname
              end
