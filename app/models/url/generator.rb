@@ -44,6 +44,7 @@ class Url
       url = URI.parse(URI.escape(url))
 
       raise URI::InvalidURIError if url.scheme.nil? || url.host.nil?
+      raise URI::InvalidURIError unless url.scheme.in? ['http', 'https']
 
       url.scheme + url.host + url.port + url.path + url.query
     end
