@@ -18,7 +18,7 @@ class Url
     end
 
     def generate
-      if given_url.nil?
+      if given_url.blank?
         errors.add(:base, 'Url cannot be blank')
 
         return false
