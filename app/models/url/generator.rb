@@ -11,27 +11,25 @@ class Url
   class Generator
     include ActiveModel::Model
 
-    attr_reader :direction, :hashed_value
+    attr_reader :given_url, :direction, :hashed_value
 
-    def initialize(url)
-      @given_url = url
+    def initialize(given_url)
+      @given_url = given_url
     end
 
     def generate
-      if url.nil?
+      if given_url.nil?
         errors.add(:base, 'Url cannot be blank')
 
         return false
       end
 
-      @direction = sanitize_url(direction)
-      @hashed_value = Digest::MD5.base64digest(url)
-
-      url = Url.new(to_hash)
+      @direction = sanitize_url(given_url)
+      @hashed_value = Digest::MD5.base64digest(given_url)
 
       # NOTE: valid でかつ永続化に失敗する場合
       # 予期せぬ状態になることが考えられるので例外を投げる
-      url.save!
+      Url.create!(to_hash)
 
       true
     rescue URI::Error => e
