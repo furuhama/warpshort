@@ -4,6 +4,10 @@ require 'digest'
 require 'uri'
 
 class Url
+  # NOTE: Url::Generator は
+  #   - ユーザーからの入力値の検証
+  #   - db に格納する値の生成
+  # を行うクラス
   class Generator
     include ActiveModel::Model
 
