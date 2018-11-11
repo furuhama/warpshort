@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'digest'
+
 class Url
   class Generator
     include ActiveModel::Model
@@ -8,8 +10,7 @@ class Url
 
     def initialize(url)
       @direction = url
-      # TODO: hash 化のロジック実装する
-      @hashed_value = url
+      @hashed_value = Digest::MD5.base64digest url
     end
 
     def generate

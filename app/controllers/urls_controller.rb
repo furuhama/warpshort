@@ -12,10 +12,14 @@ class UrlsController < ApplicationController
   end
 
   def create
+    if already_generated_url =  Url.find_by(direction: url_param[:direction])
+      return redirect_to root_path, notice: "Here's Warp gate for your direction: #{WarpShort::HOSTNAME + already_generated_url.hashed_value}"
+    end
+
     url_generator = Url::Generator.new(url_param[:direction])
 
     if url_generator.generate
-      redirect_to root_path, notice: "Here's Warp gate for your direction: #{url_generator.hashed_value}"
+      redirect_to root_path, notice: "Here's Warp gate for your direction: #{WarpShort::HOSTNAME + url_generator.hashed_value}"
     else
       redirect_to root_path, alert: url_generator.errors.full_messages
     end
@@ -24,7 +28,7 @@ class UrlsController < ApplicationController
   private
 
   def set_url
-    @url = Url.find_by(code: params[:code])
+    @url = Url.find_by(hashed_value: params[:code])
   end
 
   def url_param
